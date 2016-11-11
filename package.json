@@ -1,0 +1,23 @@
+{
+  "name": "node-task",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pod-proteinom/node-task.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pod-proteinom/node-task/issues"
+  },
+  "homepage": "https://github.com/pod-proteinom/node-task#readme",
+  "dependencies": {
+    "cors": "^2.8.1"
+  }
+}
