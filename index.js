@@ -39,6 +39,31 @@ app.get('/task2B', (req, res) => {
     }
 });
 
+app.get('/task2C', (req, res) => {
+    const query = req.query.username;
+    const usernameReg = /^@?[\w.]+$/;
+    // link like site/username
+    const pureLinkReg = /\/{0,2}[\w.]+\/@?[\w.]+/;
+
+    if (!query) {
+        res.end('Invalid username')
+    }
+    if (usernameReg.test(query)) {
+    	const username = replaceUselessSym(query);
+        res.end(`@${username}`);
+    } else if (pureLinkReg.test(query)) {
+        const pureLink = query.match(pureLinkReg)[0];
+        const username = replaceUselessSym(pureLink.slice(pureLink.lastIndexOf('/')));
+        res.end(`@${username}`);
+    } else {
+        res.end('Invalid username')
+    }
+});
+
+const replaceUselessSym = (str) => {
+	return str.replace(/[^A-Za-z0-9_.]/g, '');
+};
+
 app.listen(3000, function() {
     console.log('App listening on port 3000!');
 });
