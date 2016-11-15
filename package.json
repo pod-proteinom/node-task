@@ -1,23 +1,28 @@
 {
-  "name": "node-task",
+  "name": "node_boiler",
   "version": "1.0.0",
-  "description": "",
+  "description": "node.js boilerplate",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index"
+    "start:win": "set NODE_PATH=./app&&set NODE_ENV=development&&nodemon"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pod-proteinom/node-task.git"
+    "url": "git+https://github.com/pod-proteinom/node_boiler.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/pod-proteinom/node-task/issues"
+    "url": "https://github.com/pod-proteinom/node_boiler/issues"
   },
-  "homepage": "https://github.com/pod-proteinom/node-task#readme",
+  "homepage": "https://github.com/pod-proteinom/node_boiler#readme",
   "dependencies": {
-    "cors": "^2.8.1"
+    "config": "^1.24.0",
+    "cors": "^2.8.1",
+    "express": "^4.14.0",
+    "morgan": "^1.7.0",
+    "nodemon": "^1.11.0",
+    "winston": "^2.3.0"
   }
 }
