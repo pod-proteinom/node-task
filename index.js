@@ -15,29 +15,35 @@ app.get('/task2A', function(req, res) {
 app.get('/task2B', (req, res) => {
     const fullname = req.query.fullname;
     const decodeFullname = decodeURIComponent(fullname);
-    if (!decodeFullname || /[0-9]+/g.test(decodeFullname)) {
+    if (!decodeFullname || /[0-9_//]+/g.test(decodeFullname)) {
         res.end('Invalid fullname');
     }
-
-    const words = decodeFullname.replace(/\s\s+/g, ' ').split(' ');
-
-    if (words.length > 3) {
+    const words = decodeFullname.trim().toLowerCase()
+        .replace(/\s\s+/g, ' ').split(' ');
+    const capitalizedWords = capitalizeFirstLetter(words);
+    if (capitalizedWords.length > 3) {
         res.end('Invalid fullname');
     } else {
-        if (words.length == 1) {
-            res.end(words[0]);
-        } else if (words.length == 2) {
-            const firstName = words[0].slice(0, 1);
-            const familyName = words[1];
+        if (capitalizedWords.length == 1) {
+            res.end(capitalizedWords[0]);
+        } else if (capitalizedWords.length == 2) {
+            const firstName = capitalizedWords[0].slice(0, 1);
+            const familyName = capitalizedWords[1];
             res.end(`${familyName} ${firstName}.`);
         } else {
-            const firstName = words[0].slice(0, 1);
-            const middleName = words[1].slice(0, 1);
-            const familyName = words[2];
+            const firstName = capitalizedWords[0].slice(0, 1);
+            const middleName = capitalizedWords[1].slice(0, 1);
+            const familyName = capitalizedWords[2];
             res.end(`${familyName} ${firstName}. ${middleName}.`);
         }
     }
 });
+
+const capitalizeFirstLetter = words => {
+    return words.map(word => {
+        return word.charAt(0).toUpperCase() + word.slice(1);
+    })
+}
 
 app.get('/task2C', (req, res) => {
     const query = req.query.username;
@@ -49,7 +55,7 @@ app.get('/task2C', (req, res) => {
         res.end('Invalid username')
     }
     if (usernameReg.test(query)) {
-    	const username = replaceUselessSym(query);
+        const username = replaceUselessSym(query);
         res.end(`@${username}`);
     } else if (pureLinkReg.test(query)) {
         const pureLink = query.match(pureLinkReg)[0];
@@ -61,7 +67,7 @@ app.get('/task2C', (req, res) => {
 });
 
 const replaceUselessSym = (str) => {
-	return str.replace(/[^A-Za-z0-9_.]/g, '');
+    return str.replace(/[^A-Za-z0-9_.]/g, '');
 };
 
 app.listen(3000, function() {
