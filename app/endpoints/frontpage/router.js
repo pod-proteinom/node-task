@@ -2,9 +2,10 @@
 
 const express = require('express');
 const router = express.Router();
+const logger = require('modules/logger');
 
 router.get('/', (req, res, next) => {
-    res.send('Hello');
+    res.json(req.locals.data);
 });
 
 module.exports = router;

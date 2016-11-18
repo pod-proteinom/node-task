@@ -12,4 +12,4 @@ const server = app.listen(conf.server.port, (err) => {
 	logger.info(`Server is running on port ${conf.server.port}`); 
 });
 
-module.exports = server;
+module.exports = require('modules/data-loader').then(server);

@@ -14,7 +14,7 @@ module.exports = {
         port: 4000
     },
     logger: {
-        level: 'debug',
+        level: 'err',
 		colorize: true
     }
 }
