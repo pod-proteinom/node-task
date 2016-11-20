@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/pod-proteinom/node-task#readme",
   "dependencies": {
-    "cors": "^2.8.1"
+    "cors": "^2.8.1",
+    "parse-color": "^1.0.0"
   }
 }

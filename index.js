@@ -70,6 +70,69 @@ const replaceUselessSym = (str) => {
     return str.replace(/[^A-Za-z0-9_.]/g, '');
 };
 
+app.get('/task2D', (req, res) => {
+    const queryColor = req.query.color;
+    if (!queryColor) {
+        res.end('Invalid color');
+    }
+    let color = queryColor.replace(/%([^0-9]+)/g, "%25$1");
+    color = decodeURIComponent(color.trim().toLowerCase());
+
+    if (/^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3}\s*)\)/.test(color)) {
+        var parse = require('parse-color');
+        color = parse(color);
+        color.rgb.forEach(c => {
+            if (c < 0 || c > 255) {
+                return res.end('Invalid color');
+
+            }
+        });
+        return res.end(color.hex);
+    } else if (/hsl\(\s*(\d{1,3})\s*,\s*(\d{1,3})\%\s*,\s*(\d{1,3})\%\s*\)/.test(color)) {
+        var parse = require('parse-color');
+        color = parse(color);
+        color.hsl.forEach((c, index) => {
+            if (index != 0 && (c < 0 || c > 100)) {
+                return res.end('Invalid color');
+            }
+        })
+        return res.end(color.hex);
+    }
+
+    color = color.replace(/#/, '')
+    if (color.length == 3) {
+        color = doubleColor(color);
+    }
+
+    if (/^[0-9a-f]{3,3}$/.test(color) || /^[0-9a-f]{6,6}$/.test(color)) {
+        res.end(`#${color}`);
+    } else {
+        res.end('Invalid color');
+    }
+});
+
+
+
+const componentToHex = (c) => {
+    var hex = c.toString(16);
+    console.log(hex)
+    return hex.length == 1 ? "0" + hex : hex;
+}
+
+const rgbToHex = (r, g, b) => {
+    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+}
+
+
+const doubleColor = (color) => {
+    let newColor = '';
+    for (let i = 0; i < color.length; i++) {
+        newColor += color[i] + color[i];
+
+    }
+    return newColor;
+}
+
 app.listen(3000, function() {
     console.log('App listening on port 3000!');
 });
