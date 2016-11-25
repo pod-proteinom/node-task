@@ -111,19 +111,6 @@ app.get('/task2D', (req, res) => {
     }
 });
 
-
-
-const componentToHex = (c) => {
-    var hex = c.toString(16);
-    console.log(hex)
-    return hex.length == 1 ? "0" + hex : hex;
-}
-
-const rgbToHex = (r, g, b) => {
-    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
-}
-
-
 const doubleColor = (color) => {
     let newColor = '';
     for (let i = 0; i < color.length; i++) {
@@ -132,6 +119,26 @@ const doubleColor = (color) => {
     }
     return newColor;
 }
+
+app.get('/task2X', function(req, res) {
+    const numOfMoves = +req.query.i;
+    res.end(getNumOfPossilities(numOfMoves).toString());
+});
+
+const getNumOfPossilities = (numOfMoves) => {
+    const BigNumber = require('big-number');
+    let result = [];
+    result.push(BigNumber(1));
+    result.push(BigNumber(6).multiply(3).multiply(result[0]));
+    result.push(BigNumber(6).multiply(2).multiply(result[1])
+        .add(BigNumber(9).multiply(3).multiply(result[0])));
+    for (let i = 3; i <= numOfMoves; i++) {
+        result[i] = BigNumber(6).multiply(2).multiply(result[i - 1])
+            .add(BigNumber(9).multiply(2).multiply(result[i - 2]));
+    }
+    return result[numOfMoves];
+}
+
 
 app.listen(3000, function() {
     console.log('App listening on port 3000!');

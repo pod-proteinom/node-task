@@ -18,7 +18,12 @@
   },
   "homepage": "https://github.com/pod-proteinom/node-task#readme",
   "dependencies": {
+    "big-number": "^0.4.0",
     "cors": "^2.8.1",
+    "express": "^4.14.0",
     "parse-color": "^1.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
   }
 }
